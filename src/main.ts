@@ -8,9 +8,8 @@ async function bootstrap(): Promise<void> {
 
   initAdapters(app);
 
-  await app.listen(5000, () => {
-    console.log(`Listening on port 3000.`);
-  });
+  await app.listen(process.env.PORT || 5000);
+  
 }
 
 bootstrap();
