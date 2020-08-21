@@ -3,6 +3,6 @@ import { SubscribeMessage, WebSocketGateway, MessageBody } from '@nestjs/websock
 export class EventsGateway {
   @SubscribeMessage('watch-location')
   public watchLocation(@MessageBody() data: string) {
-    return {event: 'watch-position', data};
+    return {event: 'watch-location', data};
   }
 }
