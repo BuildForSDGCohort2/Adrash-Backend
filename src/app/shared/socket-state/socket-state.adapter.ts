@@ -13,6 +13,8 @@ export interface AuthenticatedSocket extends socketio.Socket {
   auth: TokenPayload;
 }
 
+type SocketCallback = (socket: AuthenticatedSocket) => void;
+
 export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
   public constructor(
     private readonly app: INestApplicationContext,
@@ -27,7 +29,7 @@ export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
     // this.redisPropagatorService.injectSocketServer(server);
 
     server.use(async (socket: AuthenticatedSocket, next) => {
-      const token = socket.handshake.query?.token || socket.handshake.headers?.authorization;
+      const token = socket.handshake.query.token || socket.handshake.headers.authorization;
 
       if (!token) {
         socket.auth = null;
@@ -52,7 +54,7 @@ export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
     return server;
   }
 
-  public bindClientConnect(server: socketio.Server, callback: Function): void {
+  public bindClientConnect(server: socketio.Server, callback: SocketCallback): void {
     server.on('connection', (socket: AuthenticatedSocket) => {
       if (socket.auth) {
         this.socketStateService.add(socket.auth.userId, socket);
