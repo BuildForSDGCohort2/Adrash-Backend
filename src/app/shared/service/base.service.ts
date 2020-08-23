@@ -3,30 +3,30 @@ import { Document, Model, Types } from 'mongoose';
 export abstract class BaseService <T extends Document> {
   protected _model: Model<T>;
 
-  findAll(filter: {}) {
-    return this._model.find(filter);
+  findAll(filter: {}): Promise<T[]> {
+    return this._model.find(filter).exec();
   }
-  findOne(filter: {}) {
-    return this._model.findOne(filter);
+  findOne(filter: {}): Promise<T> {
+    return this._model.findOne(filter).exec();
   }
-  findById(id: string) {
-    return this._model.findById(Types.ObjectId(id));
+  findById(id: string): Promise<T>  {
+    return this._model.findById(Types.ObjectId(id)).exec();
   }
-  create(item) {
+  create(item): Promise<T>  {
     return this._model.create(item);
   }
-  createMany(items) {
+  createMany(items): Promise<T> {
     return this._model.insertMany(items);
   }
-  update(id: string, item) {
+  update(id: string, item): Promise<T>{
     return this._model
       .findByIdAndUpdate(Types.ObjectId(id), item, { new: true })
       .exec();
   }
-  updateMany(filter, item) {
-    return this._model.updateMany(filter, item);
+  updateMany(filter, item): Promise<T>  {
+    return this._model.updateMany(filter, item).exec();
   }
-  deleteById(id: string) {
+  deleteById(id: string): Promise<T>  {
     return this._model.findByIdAndDelete(Types.ObjectId(id)).exec();
   }
   async delete(filter = {}): Promise<any> {
