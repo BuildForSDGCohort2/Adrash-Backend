@@ -12,18 +12,18 @@ export abstract class BaseService <T extends Document> {
   findById(id: string): Promise<T>  {
     return this._model.findById(Types.ObjectId(id)).exec();
   }
-  create(item: any): Promise<T>  {
+  create(item: import("mongoose").CreateQuery<T>): Promise<T>  {
     return this._model.create(item);
   }
-  createMany(items: any): Promise<T> {
+  createMany(items:  import("mongoose").CreateQuery<T[]>): Promise<T> {
     return this._model.insertMany(items);
   }
-  update(id: string, item: any): Promise<T>{
+  update(id: string, item: import("mongoose").CreateQuery<T>): Promise<T>{
     return this._model
       .findByIdAndUpdate(Types.ObjectId(id), item, { new: true })
       .exec();
   }
-  updateMany(filter = {}, item: any): Promise<T>  {
+  updateMany(filter = {}, item: import("mongoose").CreateQuery<T>): Promise<T>  {
     return this._model.updateMany(filter, item).exec();
   }
   deleteById(id: string): Promise<T>  {
