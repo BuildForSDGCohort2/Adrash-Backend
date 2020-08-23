@@ -1,7 +1,5 @@
-import { AuthModule } from './core/auth/auth.module';
 import { UserModule } from './core/user/user.module';
 import { Module } from '@nestjs/common';
-
 import { SharedModule } from './shared/shared.module';
 import { EventsGateway } from './test.gateway';
 import { ConfigModule } from '@nestjs/config';
@@ -11,7 +9,6 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
-    AuthModule,
     DatabaseModule,
     UserModule, SharedModule, ConfigModule.forRoot()],
   providers: [
